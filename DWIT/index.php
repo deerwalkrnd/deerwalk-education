@@ -14,7 +14,7 @@ $backImage           = $backgroundImageData[0]['image_name'];
   .popup {
     width: 100%;
     height: 100vh;
-    position: fixed;
+    position: fixed;  
     /* Stay in place */
     z-index: 9999;
     /* Sit on top */
