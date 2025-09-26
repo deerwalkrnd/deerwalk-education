@@ -129,7 +129,7 @@ function closeModal() {
                     NOW OPEN FOR <span class="ohs-accent-green">REGISTRATION</span>
                 </h5>
                 <h3 class="ohs-program-title">For BCA | BSc. CSIT</h3>
-            <a class="ohs-action-btn" target="_blank" href="https://deerwalk.edu.np/DWIT/contact.php">
+            <a class="ohs-action-btn" target="_blank" href="preregister.php">
                 INQUIRE NOW
             </a>
         </div>
