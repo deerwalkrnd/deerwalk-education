@@ -149,8 +149,15 @@ $backImage           = $backgroundImageData[0]['image_name'];
     ?>
       <div class="row" style="background-color: white !important;">
         <div class="col-md-3">
-          <img src="./admin/uploads/articles/<?php echo ($value['image_name']); ?>" height="200" width="100%" class="mx-auto" style="object-fit: cover">
-        </div>
+           <?php
+           $imagePath = "./admin/uploads/articles/" . $value['image_name'];
+           if (file_exists($imagePath)) {
+               echo '<img src="' . $imagePath . '" height="200" width="100%" class="mx-auto" style="object-fit: cover">';
+           } else {
+               echo '<div style="height: 200px; width: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #666;">Image not available</div>';
+           }
+           ?>
+         </div>
         <div class="col-md-8">
           <b id="textNews"> <?php echo $value['title']; ?> </b><br><br>
           <p><?php echo html_entity_decode(substr($value['content'], 0, 200)) . "..."; ?></p>
