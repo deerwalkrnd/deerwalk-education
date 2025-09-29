@@ -46,6 +46,7 @@ elseif ($_SESSION['userPrivilege'] != "admin" && $url != "index")
     </div>
 
     <input type="hidden" name="action" value="add">
+    <input type="hidden" name="csrf_token" value="<?php echo $obj->generateCSRFToken(); ?>">
 
     <script type="text/javascript">
         document.write("<button type=\"submit\" name=\"formSubmitted\" class=\"btn btn-primary\">Save</button>");

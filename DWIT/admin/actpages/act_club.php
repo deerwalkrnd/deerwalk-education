@@ -8,13 +8,19 @@ elseif ($_SESSION['userPrivilege'] != "admin" && $url != "index")
     header("location:login.php");
 
 if (isset($_POST['formSubmitted'])) {
+    // Security: Validate CSRF token
+    if (!$obj->validateCSRFToken($_POST['csrf_token'] ?? '')) {
+        Page_finder::set_message("Invalid CSRF token", 'danger');
+        die($obj->redirect('?page=club'));
+    }
+
     $page = "club";
 
     if ($_POST['action'] == "add") {
         $obj->tbl = "clubs";
 
         $obj->val = array(
-            "name" => $_POST['club-name'],
+            "name" => $obj->cleanInput($_POST['club-name']),
             "introduction" => $obj->cleanInput($obj->checkValue($_POST['introduction'], $page)),
             "club_vision" => $obj->cleanInput($obj->checkValue($_POST['club-vision'], $page)),
             "club_mission" => $obj->cleanInput($obj->checkValue($_POST['club-mission'], $page))
@@ -29,7 +35,7 @@ if (isset($_POST['formSubmitted'])) {
         $obj->tbl = "clubs";
 
         $obj->val = array(
-            "name" => $_POST['club-name'],
+            "name" => $obj->cleanInput($_POST['club-name']),
             "introduction" => $obj->cleanInput($obj->checkValue($_POST['introduction'], $page)),
             "club_vision" => $obj->cleanInput($obj->checkValue($_POST['club-vision'], $page)),
             "club_mission" => $obj->cleanInput($obj->checkValue($_POST['club-mission'], $page))

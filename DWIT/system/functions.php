@@ -89,39 +89,72 @@ class Functions extends database
 
     public function getFileName($file, $folder, $fileType = 0, $page = NULL, $redirectId = NULL, $maxSize = 500000)
     {
+        if (!isset($file) || !is_uploaded_file($file['tmp_name'])) {
+            Page_finder::set_message("Invalid file upload", 'danger');
+            return 0;
+        }
+
         $fileName = $file['name'];
         $fileName = str_replace(' ', '', $fileName);
+
         if (!empty($fileName)) {
+            $allowedExtensions = array('jpg', 'jpeg', 'png', 'gif', 'pdf');
+            $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+
+            if (!in_array($fileExtension, $allowedExtensions)) {
+                Page_finder::set_message("File type not allowed", 'danger');
+                return 0;
+            }
+
             $initType = explode("/", $file['type']);
             $type = end($initType);
+
             if ($this->typChecker($type, $fileType) == 1 && $this->mimeChecker($file['type'], $fileType) == 1) {
                 $size = $file['size'];
 
-                if ($size < $maxSize) {      //fix size needed
+                if ($size < $maxSize && $size > 0) {
                     $source = $file['tmp_name'];
-                    $fileName = date("Ymdhis_") . $fileName;
+
+                    // Security: Verify file content matches extension (magic bytes check)
+                    if (!$this->validateFileContent($source, $fileExtension)) {
+                        Page_finder::set_message("File content does not match extension", 'danger');
+                        return 0;
+                    }
+
+                    // Security: Generate unique filename to prevent collisions
+                    $uniqueId = uniqid();
+                    $safeFileName = $uniqueId . '_' . preg_replace('/[^a-zA-Z0-9.-]/', '_', $fileName);
+                    $fileName = date("Ymdhis_") . $safeFileName;
                     $destination = "../admin/uploads/" . $folder . "/" . $fileName;
+
+                    $dirPath = dirname($destination);
+                    if (!is_dir($dirPath) && !mkdir($dirPath, 0755, true)) {
+                        Page_finder::set_message("Upload directory error", 'danger');
+                        return 0;
+                    }
+
                     $uploadStatus = move_uploaded_file($source, $destination);
-                    if($uploadStatus == 1)
+                    if($uploadStatus == 1) {
+                        chmod($destination, 0644);
                         return $fileName;
-                    else{
-                        Page_finder::set_message("Image could not be uploaded.Please Try Again Later", 'warning');
+                    } else {
+                        Page_finder::set_message("File could not be uploaded. Please try again later", 'warning');
                         if($redirectId != NULL)
-                            die($this->redirect("?fold=form&page=add-$page&$redirectId"));    
+                            die($this->redirect("?fold=form&page=add-$page&$redirectId"));
                         else
                             die($this->redirect("?fold=form&page=add-$page"));
                     }
                 } else {
-                    Page_finder::set_message("Upload Image size exceed max allocated size", 'danger');
+                    Page_finder::set_message("File size must be between 1 byte and " . ($maxSize/1024/1024) . "MB", 'danger');
                     if($redirectId != NULL)
-                        die($this->redirect("?fold=form&page=add-$page&$redirectId"));    
+                        die($this->redirect("?fold=form&page=add-$page&$redirectId"));
                     else
                         die($this->redirect("?fold=form&page=add-$page"));
                 }
             } else {
-                Page_finder::set_message("Invalid File Type", 'danger');
+                Page_finder::set_message("Invalid file type", 'danger');
                 if($redirectId != NULL)
-                        die($this->redirect("?fold=form&page=add-$page&$redirectId"));    
+                        die($this->redirect("?fold=form&page=add-$page&$redirectId"));
                     else
                         die($this->redirect("?fold=form&page=add-$page"));
             }
@@ -160,7 +193,62 @@ class Functions extends database
             if (strtolower($mime) == "image/png")
                 return 1;
         }
-        return 0;   
+        return 0;
+    }
+
+    /**
+     * Security: Validate file content matches extension using magic bytes
+     */
+    private function validateFileContent($filePath, $extension)
+    {
+        $handle = fopen($filePath, 'rb');
+        if (!$handle) {
+            return false;
+        }
+
+        $magicBytes = fread($handle, 12);
+        fclose($handle);
+
+        $signatures = array(
+            'jpg' => array("\xFF\xD8\xFF", "\xFF\xD8\xFF\xE0", "\xFF\xD8\xFF\xE1", "\xFF\xD8\xFF\xE8"),
+            'jpeg' => array("\xFF\xD8\xFF", "\xFF\xD8\xFF\xE0", "\xFF\xD8\xFF\xE1", "\xFF\xD8\xFF\xE8"),
+            'png' => array("\x89\x50\x4E\x47\x0D\x0A\x1A\x0A"),
+            'gif' => array("\x47\x49\x46\x38\x37\x61", "\x47\x49\x46\x38\x39\x61"),
+            'pdf' => array("\x25\x50\x44\x46")
+        );
+
+        if (!isset($signatures[$extension])) {
+            return false;
+        }
+
+        foreach ($signatures[$extension] as $signature) {
+            if (strpos($magicBytes, $signature) === 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function generateCSRFToken()
+    {
+        if (empty($_SESSION['csrf_token'])) {
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        }
+        return $_SESSION['csrf_token'];
+    }
+
+    public function validateCSRFToken($token)
+    {
+        if (empty($_SESSION['csrf_token']) || empty($token)) {
+            return false;
+        }
+        return hash_equals($_SESSION['csrf_token'], $token);
+    }
+
+    public function regenerateCSRFToken()
+    {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     }
 
     public function removeOldFile($file, $folder)

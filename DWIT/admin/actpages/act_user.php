@@ -11,6 +11,11 @@ elseif ($_SESSION['userPrivilege'] != "admin" && $url != "index")
 require_once('../system/application_top.php');
 
 if (isset($_POST['formSubmitted'])) {
+    if (!$obj->validateCSRFToken($_POST['csrf_token'] ?? '')) {
+        Page_finder::set_message("Invalid CSRF token", 'danger');
+        die($obj->redirect("?page=users"));
+    }
+
     $page = "users";
     if ($_POST['action'] == "add") {
         $obj->tbl = "user";
@@ -26,9 +31,9 @@ if (isset($_POST['formSubmitted'])) {
         $obj->val = array(
             "version" => 0,
             "email" => $email,
-            "full_name" => $_POST['fullname'],
+            "full_name" => $obj->cleanInput($_POST['fullname']),
             "password" => $password,
-            "type" => $_POST['type'],
+            "type" => $obj->cleanInput($_POST['type']),
             "enable" => 1
         );
         $id = $obj->insert();
