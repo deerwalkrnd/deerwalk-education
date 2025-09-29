@@ -1,7 +1,11 @@
 <?php
-require_once("../DWIT/system/application_top.php"); // starts session
+require_once("../DWIT/system/application_top.php");
 
-$csrf_token = $_SESSION['csrf_token']; // now this is guaranteed
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+$csrf_token = $_SESSION['csrf_token'];
 $pgName = 'Pre Register';
 include('./include/header.php');
 ?>
