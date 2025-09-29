@@ -25,17 +25,17 @@ if (isset($_GET['aid'])) {
     <input type="text" id="club-name" class="form-control" placeholder="Enter club name" name="club-name" 
     value="<?php if (isset($oldData)) echo $oldData['name']; ?>">
 </div>
-    <input type="hidden" name="action" value=<?php echo $action;?>>
-    <div class="form-group">
-        <label for="introduction">Introduction: </label>
-        <textarea class="form-control" id="introduction" name="introduction"><?php if (isset($oldData)) echo $oldData['introduction']; ?></textarea>
-    </div>
-    <div class="form-group">
-        <label for="club-vision">Club Vision: </label>
-        <textarea class="form-control" id="club-vision" name="club-vision"><?php if (isset($oldData)) echo $oldData['club_vision']; ?></textarea>
-    </div>
-    <?php if (isset($oldData)) { ?><input type="hidden" name="id" value="<?php echo $id; ?>"><?php } ?>
-    <input type="hidden" name="action" value="<?php echo $action; ?>">
+   <input type="hidden" name="action" value="<?php echo $action; ?>">
+   <input type="hidden" name="csrf_token" value="<?php echo $obj->generateCSRFToken(); ?>">
+   <div class="form-group">
+       <label for="introduction">Introduction: </label>
+       <textarea class="form-control" id="introduction" name="introduction"><?php if (isset($oldData)) echo $oldData['introduction']; ?></textarea>
+   </div>
+   <div class="form-group">
+       <label for="club-vision">Club Vision: </label>
+       <textarea class="form-control" id="club-vision" name="club-vision"><?php if (isset($oldData)) echo $oldData['club_vision']; ?></textarea>
+   </div>
+   <?php if (isset($oldData)) { ?><input type="hidden" name="id" value="<?php echo $id; ?>"><?php } ?>
     <div class="form-group">
         <label for="club-mission">Club Mission: </label>
         <textarea class="form-control" id="club-mission" name="club-mission"><?php if (isset($oldData)) echo $oldData['club_mission']; ?></textarea>

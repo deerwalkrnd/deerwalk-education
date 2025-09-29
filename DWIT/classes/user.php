@@ -121,15 +121,24 @@ class User extends Database
     public function count_login_attempt()
     {
         $ip = $_SERVER['REMOTE_ADDR'];
-        $date = date('Y-m-d H:i:s', strtotime('-1 day')) . "<br>";
-        $sql = $this->db->query("select count(*) as count_attempt from login_attempt where ip = '$ip' and login_time > '$date'");
-        $row = $sql->fetch();
+        $date = date('Y-m-d H:i:s', strtotime('-1 day'));
+
+        $stmt = $this->db->prepare("SELECT COUNT(*) as count_attempt FROM login_attempt WHERE ip = :ip AND login_time > :date");
+        $stmt->bindParam(':ip', $ip);
+        $stmt->bindParam(':date', $date);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $max = $row['count_attempt'];
+
         if ($max > 15)
             return $max;
 
-        $sql = $this->db->query("select count(*) as count_attempt from login_attempt where ip = '$ip' and token='$this->hashed_token' and initializer = '$this->initializer'");
-        $row = $sql->fetch();
+        $stmt = $this->db->prepare("SELECT COUNT(*) as count_attempt FROM login_attempt WHERE ip = :ip AND token = :token AND initializer = :initializer");
+        $stmt->bindParam(':ip', $ip);
+        $stmt->bindParam(':token', $this->hashed_token);
+        $stmt->bindParam(':initializer', $this->initializer);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return $row['count_attempt'];
     }
 

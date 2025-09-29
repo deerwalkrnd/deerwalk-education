@@ -149,8 +149,15 @@ $backImage           = $backgroundImageData[0]['image_name'];
     ?>
       <div class="row" style="background-color: white !important;">
         <div class="col-md-3">
-          <img src="./admin/uploads/articles/<?php echo ($value['image_name']); ?>" height="200" width="100%" class="mx-auto" style="object-fit: cover">
-        </div>
+           <?php
+           $imagePath = "./admin/uploads/articles/" . $value['image_name'];
+           if (file_exists($imagePath)) {
+               echo '<img src="' . $imagePath . '" height="200" width="100%" class="mx-auto" style="object-fit: cover">';
+           } else {
+               echo '<div style="height: 200px; width: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #666;">Image not available</div>';
+           }
+           ?>
+         </div>
         <div class="col-md-8">
           <b id="textNews"> <?php echo $value['title']; ?> </b><br><br>
           <p><?php echo html_entity_decode(substr($value['content'], 0, 200)) . "..."; ?></p>
@@ -342,13 +349,11 @@ $backImage           = $backgroundImageData[0]['image_name'];
             dataType: "json",
             timeout: 15000, // Increased timeout for database queries
             beforeSend: function() {
-              console.log("Loading OHS content...");
               // Show overlay with loading spinner
               $('#welcomePopup').addClass('show');
               $('#OHSLoader').empty(); // This will show the loading spinner
             },
             success: function(response) {
-              console.log("AJAX Success:", response);
 
               if (response.status == 1 || response.status == 0) {
                 // Load content and show popup with animation
@@ -364,11 +369,6 @@ $backImage           = $backgroundImageData[0]['image_name'];
               }
             },
             error: function(xhr, status, error) {
-              console.log("AJAX Error:");
-              console.log("Status:", status);
-              console.log("Error:", error);
-              console.log("HTTP Status:", xhr.status);
-              console.log("Response Text:", xhr.responseText);
 
               let errorMessage = '';
               if (xhr.status === 404) {
