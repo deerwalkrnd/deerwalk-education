@@ -349,13 +349,11 @@ $backImage           = $backgroundImageData[0]['image_name'];
             dataType: "json",
             timeout: 15000, // Increased timeout for database queries
             beforeSend: function() {
-              console.log("Loading OHS content...");
               // Show overlay with loading spinner
               $('#welcomePopup').addClass('show');
               $('#OHSLoader').empty(); // This will show the loading spinner
             },
             success: function(response) {
-              console.log("AJAX Success:", response);
 
               if (response.status == 1 || response.status == 0) {
                 // Load content and show popup with animation
@@ -371,11 +369,6 @@ $backImage           = $backgroundImageData[0]['image_name'];
               }
             },
             error: function(xhr, status, error) {
-              console.log("AJAX Error:");
-              console.log("Status:", status);
-              console.log("Error:", error);
-              console.log("HTTP Status:", xhr.status);
-              console.log("Response Text:", xhr.responseText);
 
               let errorMessage = '';
               if (xhr.status === 404) {
