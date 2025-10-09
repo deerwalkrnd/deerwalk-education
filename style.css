@@ -99,7 +99,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
-  height: 500px;
+  height: 370px;
   background-color: #0A492C;
   opacity: 85%;
 }
@@ -108,7 +108,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
-  height: 500px;
+  height: 370px;
   background-color: #0f5288;
   opacity: 85%;
 }
@@ -117,8 +117,16 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
-  height: 500px;
+  height: 370px;
   background-color: #009DCA;
+  opacity: 85%;
+}
+.bg-overlayBox-4 {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  height: 370px;
+  background-color:  #4F65DE;
   opacity: 85%;
 }
 
@@ -184,12 +192,12 @@ body {
 }
 
 .inner-div {
-  height: 466px;
+  height: 333px;
   margin-top: 18px;
 }
 
 .inner-div-overlay {
-  height: 462px;
+  height: 330px;
 }
 
 .inner-div-1:hover {
@@ -201,7 +209,7 @@ body {
 }
 
 .inner-div-1 {
-  height: 466px;
+  height: 333px;
   margin-top: 18px;
 }
 
@@ -212,7 +220,7 @@ body {
 }
 
 .inner-div-overlay-1 {
-  height: 462px;
+  height: 330px;
 }
 
 .inner-div-3:hover {
@@ -229,13 +237,24 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }
+.inner-div-5:hover {
+  border: white solid 2px;
+  box-shadow: inset 0 0 20px 10px rgba(0, 0, 0,1);
+  background: url(images/bharatpur_bg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
 .inner-div-3 {
-  height: 466px;
+  height: 333px;
   margin-top: 18px;
 }
 .inner-div-4 {
-  height: 466px;
+  height: 333px;
+  margin-top: 18px;
+}
+.inner-div-5 {
+  height: 333px;
   margin-top: 18px;
 }
 
@@ -246,10 +265,15 @@ body {
 }
 
 .inner-div-overlay-3 {
-  height: 462px;
+  height: 330px;
 }
 .inner-div-overlay-4 {
-  height: 462px;
+  height: 330px;
+}
+.inner-div-overlay-4:hover{
+  background-color:rgba(0, 152, 202, 0.7);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .bg-overlayBox-1:hover {
@@ -261,6 +285,10 @@ body {
 }
 
 .bg-overlayBox-3:hover{
+  opacity: 100%;
+}
+
+.bg-overlayBox-4:hover{
   opacity: 100%;
 }
 
@@ -280,16 +308,16 @@ body {
 }
 
 @media (max-width: 769px) {
-  .bg-overlayBox-1, .bg-overlayBox-2, .bg-overlayBox-3 {
+  .bg-overlayBox-1, .bg-overlayBox-2, .bg-overlayBox-3 ,.bg-overlayBox-4,.bg-overlayBox-3{
     width: 70%!important;
     /* height: 500px; */
-    margin: 10px;
+    /* margin: 10px; */
   }
 }
 
 
 @media (max-width:1174){
-  .bg-overlayBox-1, .bg-overlayBox-3{
+  .bg-overlayBox-1{
     padding-top: 5px;
   }
 }
