@@ -139,6 +139,7 @@ body {
   font-weight: 500!important;
 }
 
+
 /* .container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
   width: 100%;
   padding-right: 15px;
@@ -169,6 +170,7 @@ body {
   display: flex;
   justify-content: center;
   gap: 1px; 
+  column-gap: 1px;
 }
 
 .col-md-auto {
@@ -308,12 +310,32 @@ body {
 }
 
 @media (max-width: 769px) {
-  .bg-overlayBox-1, .bg-overlayBox-2, .bg-overlayBox-3 ,.bg-overlayBox-4,.bg-overlayBox-3{
+  .bg-overlayBox-1, .bg-overlayBox-2, .bg-overlayBox-3 ,.bg-overlayBox-4{
     width: 70%!important;
     /* height: 500px; */
     /* margin: 10px; */
   }
 }
+ @media (min-width: 1080px) {
+  .bg-overlayBox-1, .bg-overlayBox-2, .bg-overlayBox-3 ,.bg-overlayBox-4{
+    width: 70%!important;
+    margin-top: 0rem ;
+    /* height: 500px; */
+    /* margin: 10px; */
+  }
+  .bg-overlayBox-4{
+    margin-top: 10px;
+  }
+}
+@media (min-width: 1920px) {
+  .bg-overlayBox-1, .bg-overlayBox-2, .bg-overlayBox-3 ,.bg-overlayBox-4{
+    width: 70%!important;
+    margin-top: 18rem ;
+    /* height: 500px; */
+    /* margin: 10px; */
+  }
+  
+} 
 
 
 @media (max-width:1174){
