@@ -1,1 +1,1 @@
-file to be ignored.
+please ignore this file.
