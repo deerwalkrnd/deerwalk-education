@@ -10,7 +10,7 @@ error_reporting(E_ALL);
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['formSubmitted'])) {
 
     // CSRF validation
-    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         Page_finder::set_message("Invalid CSRF token", 'danger');
         die($obj->redirect('../noticePreregister.php'));
     }
