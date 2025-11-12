@@ -1,11 +1,11 @@
 <?php
-$pgName = 'Management';
+$pgName = 'Executive Management';
 include('./include/header.php'); ?>
 
 <!--Page Banner-->
 <div class="container-fluid management-bg">
     <div class="container page-title">
-        <h4 class="display-6 text-center r-d-unit-top">MANAGEMENT</h4>
+        <h4 class="display-6 text-center r-d-unit-top">EXECUTIVE MANAGEMENT</h4>
     </div>
 </div>
 

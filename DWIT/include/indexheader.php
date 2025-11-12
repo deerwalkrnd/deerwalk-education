@@ -132,7 +132,7 @@
         }
 
         .padding {
-            padding-left: 50px;
+            padding-left: 35px;
         }
 
         .loginbtn {
@@ -279,9 +279,9 @@
                             <div class="dropdown-submenu">
                                 <a class="dropdown-item drop_content dropdown-toggle" href="#" id="ourTeamBtn">Our Team</a>
                                 <div class="dropdown-menus" id="ourTeamMenu">
-                                    <a class="dropdown-item drop_content padding" href="administration.php">Management</a>
+                                    <a class="dropdown-item drop_content padding" href="administration.php">Executive Management</a>
                                     <a class="dropdown-item drop_content padding" href="faculty.php">Faculties</a>
-                                    <a class="dropdown-item drop_content padding" href="adminlist.php">Admin Staff</a>
+                                    <!-- <a class="dropdown-item drop_content padding" href="adminlist.php">Admin Staff</a> -->
                                 </div>
                             </div>
                             <a class="dropdown-item drop_content" href="campus.php">Campus Facilities</a>
@@ -366,9 +366,9 @@
                                     Team</a>
                                 <div class="dropdown-menus" id="ourTeamMenu-sm">
                                     <a class="dropdown-item drop_content padding"
-                                        href="administration.php">Management</a>
+                                        href="administration.php">Executive Management</a>
                                     <a class="dropdown-item drop_content padding" href="faculty.php">Faculties</a>
-                                    <a class="dropdown-item drop_content padding" href="adminlist.php">Admin Staff</a>
+                                    <!-- <a class="dropdown-item drop_content padding" href="adminlist.php">Admin Staff</a> -->
                                 </div>
                             </div>
                             <a class="dropdown-item drop_content" href="campus.php">Campus Facilities</a>
@@ -481,7 +481,7 @@
                 dropdownMenu.style.display = 'none';
             } else {
                 dropdownMenu.style.display = 'block';
-                dropdownMenu.style.width = buttonWidth + 'px';
+                dropdownMenu.style.width = '3 rem';
             }
 
             // Prevent default anchor behavior (if needed)
@@ -506,7 +506,7 @@
                 dropdownMenu.style.display = 'none';
             } else {
                 dropdownMenu.style.display = 'block';
-                dropdownMenu.style.width = buttonWidth + 'px';
+                dropdownMenu.style.width = '3 rem';
             }
 
             // Prevent default anchor behavior (if needed)
