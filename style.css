@@ -331,9 +331,6 @@ body {
     /* height: 500px; */
     /* margin: 10px; */
   }
-  .bg-overlayBox-4{
-    margin-top: 10px;
-  }
 }
 @media (min-width: 1920px) {
   .bg-overlayBox-1, .bg-overlayBox-2, .bg-overlayBox-3 ,.bg-overlayBox-4{
@@ -344,6 +341,12 @@ body {
   }
   
 } 
+@media (max-width: 1360px) {
+  .bg-overlayBox-4{
+    margin-top: 10px !important;
+    margin-left: 10px !important;
+  }
+}
 
 
 @media (max-width:1174){
